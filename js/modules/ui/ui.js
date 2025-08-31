@@ -203,25 +203,18 @@ function handleHashRouting() {
  * 初始化Eruda
  */
 function initEruda() {
-  const isLocal = ['localhost', '127.0.0.1'].includes(location.hostname);
-  const debugMode = new URLSearchParams(location.search).has('debug');
+  // 在生产环境中完全移除Eruda相关的DOM元素，避免任何性能影响
   const debugTip = document.getElementById('debugTip');
   const statusTip = document.getElementById('statusTip');
-
-  if (window.eruda && debugMode) {
+  
+  if (debugTip) debugTip.remove();
+  if (statusTip) statusTip.remove();
+  
+  // 只在debug模式下检查和初始化Eruda
+  const debugMode = new URLSearchParams(location.search).has('debug');
+  if (debugMode && window.eruda) {
     eruda.init();
     console.info('Eruda：启用');
-
-    if (!isLocal && debugTip) {
-      console.log('调试：非localhost');
-      debugTip.classList.remove('hide');
-    } else {
-      debugTip.remove();
-      statusTip.classList.remove('hide')
-    }
-  } else {
-    debugTip.remove();
-    statusTip.remove();
   }
 }
 
@@ -244,7 +237,7 @@ async function openNotice(forceShow = false) {
   }, 5000);
 
   // 预加载公告内容以提高性能，但设置超时避免阻塞
-  const fetchNoticeWithTimeout = (timeout = 3000) => {
+  const fetchNoticeWithTimeout = (timeout = 10000) => {
     return Promise.race([
       fetchContent('/file/data/notice.html'),
       new Promise((_, reject) => 
