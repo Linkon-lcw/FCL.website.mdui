@@ -4,22 +4,18 @@
 
 项目网站：[https://foldcraftlauncher.cn](https://foldcraftlauncher.cn)。
 
-这里是由玩家社区自行搭建的[《Fold Craft Launcher》](https://github.com/FCL-Team/FoldCraftLauncher)非官方公益下载站，可以在这里下载到FCL的最新发行版、全部旧版本、ZL最新发行版、ZL部分旧版本、插件、驱动、Java和Pojav FFmpeg Plugin。
+这里是由玩家社区自行搭建的[《Fold Craft Launcher》](https://github.com/FCL-Team/FoldCraftLauncher)非官方公益下载站的重构版本，速度更快，模块更精简
 
 这是一个静态网站，不需要后端。使用MDUI样式。适合部署在任意静态托管服务上。
 
-此项目有个旧版样式，由于被太多人吐槽难看于是弃用了：[fcl-docs/FCL.website](https://github.com/fcl-docs/FCL.website)。
-
-洛狐对“现代化审美”的一些看法：[https://old.foldcraftlauncher.cn/page/other/perfect](https://old.foldcraftlauncher.cn/page/other/perfect)。
 
 ## 项目特点
 
-- 烂大街的MDUI
+- 烂大街的Material Design 2
 - 随意命名的变量/函数
-- 不务正业地塞彩蛋
 - 能跑就行的脚本
-- 站长没电脑被迫用手机开发调试的 `eruda.js`
-- 站长没钱怕有人滥用而加的 `gt4.js`
+- 可以使用用手机开发调试的 `eruda.js`
+- 为了防止滥用而加的 `gt4.js`
 
 - ~~拼命优化的AI~~
 
