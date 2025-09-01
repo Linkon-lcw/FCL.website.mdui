@@ -3,6 +3,13 @@
  * 负责导入和初始化所有模块
  */
 
+// 记录应用加载开始时间
+window.appStartTime = performance.now();
+console.log(`应用开始加载时间: ${window.appStartTime}ms`);
+
+// 记录模块导入开始时间
+const modulesImportStart = performance.now();
+
 // 导入核心模块
 import {
   initApp,
@@ -103,6 +110,13 @@ import {
   loadWhenVisible,
   batchLazyLoad
 } from './modules/utils/lazyLoader.js';
+
+// 记录模块导入完成时间
+const modulesImportEnd = performance.now();
+console.log(`模块导入耗时: ${Math.round(modulesImportEnd - modulesImportStart)}ms`);
+
+// 记录全局变量绑定开始时间
+const globalBindStart = performance.now();
 
 // 将变量和函数绑定到全局作用域，以保持与原代码的兼容性
 window.showEpilepsyWarning = showEpilepsyWarning;
@@ -207,15 +221,23 @@ window.lazyLoadContent = lazyLoadContent;
 window.loadWhenVisible = loadWhenVisible;
 window.batchLazyLoad = batchLazyLoad;
 
+// 记录全局变量绑定完成时间
+const globalBindEnd = performance.now();
+console.log(`全局变量绑定耗时: ${Math.round(globalBindEnd - globalBindStart)}ms`);
+
 // 初始化应用
 window.addEventListener('DOMContentLoaded', function () {
   'use strict';
-  console.log('DOMContentLoaded：完成');
+  const domLoadedTime = performance.now();
+  console.log(`DOMContentLoaded：完成，用时 ${Math.round(domLoadedTime - window.appStartTime)}ms`);
 });
 
 window.onload = async function () {
+  const onloadStart = performance.now();
+  console.log(`window.onload：开始，从应用启动算起用时 ${Math.round(onloadStart - window.appStartTime)}ms`);
   await initApp();
-  console.log('window.onload：完成');
+  const onloadEnd = performance.now();
+  console.log(`window.onload：完成，执行initApp耗时 ${Math.round(onloadEnd - onloadStart)}ms`);
 }
 
 document.getElementById('odlmSelect').addEventListener('change', function () {

@@ -47,6 +47,8 @@
       </div>
     </div>
   </div>
+
+    <script src="/js/main.js" type="module"></script>
   
   <!-- 应用栏 -->
   <div class="mdui-appbar mdui-appbar-fixed">
@@ -283,29 +285,7 @@
     <div id="tab1">
       <div class="mdui-panel" mdui-panel>
         
-        <div class="mdui-panel-item mdui-panel-item-open hide" id="debugTip">
-          <div class="mdui-panel-item-header mdui-ripple">
-            <div>调试：非localhost</div>
-            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-          </div>
-          <div class="mdui-panel-item-body">
-            <div class="mdui-typo">
-              <p>您在网址栏后输入了“?debug”，已进入debug模式，已启用Eruda。如果你不知道这是什么意思，请<a href="/">退出此模式</a>。</p>
-              <p>(For developer)在网站中发现了BUG？或有其它建议？请<a href="https://github.com/XiaoluoFoxington/FCL.website.mdui/issues">在GH仓库中提出Issue</a>或<a href="https://wj.qq.com/s2/22395480/df5b/">填写反馈问卷</a>。</p>
-            </div>
-          </div>
-        </div>
         
-        <div class="mdui-panel-item mdui-panel-item hide" id="statusTip">
-          <div class="mdui-panel-item-header mdui-ripple">
-            <div>调试：网站加载状态</div>
-            <i class="mdui-panel-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-          </div>
-          <div class="mdui-panel-item-body">
-            <div class="mdui-typo" id="statusDebug">
-            </div>
-          </div>
-        </div>
         
         <div class="mdui-panel-item mdui-panel-item-open">
           <div class="mdui-panel-item-header mdui-ripple">
@@ -503,11 +483,26 @@
   
   <script src="/js/mdui.min.js"></script>
   <script src="/js/lib/gt4.js"></script>
-  <script src="/js/lib/eruda.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script src="/js/main.js" type="module"></script>
+
   <script defer src="https://vercount.one/js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <!-- Eruda异步延迟加载，放在最后 -->
+  <script>
+    // 只在debug模式下异步加载eruda
+    if (new URLSearchParams(location.search).has('debug')) {
+      var erudaScript = document.createElement('script');
+      erudaScript.src = '/js/lib/eruda.js';
+      erudaScript.async = true;
+      erudaScript.onload = function() {
+        if (window.eruda) {
+          eruda.init();
+          console.info('Eruda：已启用');
+        }
+      };
+      document.body.appendChild(erudaScript);
+    }
+  </script>
   <!-- 异步加载 Launcher SDK -->
   <script>
     // 记录开始加载时间
